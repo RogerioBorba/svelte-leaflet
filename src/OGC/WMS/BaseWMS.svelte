@@ -31,7 +31,8 @@
         const xmlObject = xml2json(xml)
         let wms_capabilities =  new WMSCapabilities(xmlObject)
         let layers = await wms_capabilities.layerObjects()
-        wmsLayers = layers.map(layer => new WMSLayer(layer))
+        let i = 1
+        wmsLayers = layers.map(layer => new WMSLayer(layer, i++, null))
         return 1
     }
 
@@ -103,7 +104,7 @@
         <p class = "text-xl text-center text-blue-600 animate-pulse">...aguarde</p>
       {:then layers}
         {#each wmsLayers as layer}
-            <WMSCapabilityLayer wmsLayerCapability={layer} capabilitiesUrl= {selected.iri}></WMSCapabilityLayer>
+            <WMSCapabilityLayer wmsLayer={layer} capabilitiesUrl= {selected.iri}></WMSCapabilityLayer>
         {/each}    
         {:catch error}
         <p style="color: red">{error.message}</p>

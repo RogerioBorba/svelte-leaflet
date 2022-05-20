@@ -107,12 +107,18 @@ class LegendGraphic {
 
 }
 
-
 export class WMSLayer {
-    constructor(wmsLayerCapability) {
+    constructor(wmsLayerCapability, oid = null, sourceLayer = null) {
         this.wmsLayerCapability = wmsLayerCapability
+        this.sourceLayer = sourceLayer
+        this.oid = oid?oid:Date.now()
+        
     }
     
+    remove() {
+        if (this.sourceLayer)
+            this.sourceLayer.remove()
+    }
     objCapability(propertyName) {
         let obj = this.wmsLayerCapability[propertyName]
         if (obj)
@@ -167,6 +173,4 @@ export class WMSLayer {
             return new MetadataURL(metadataObj)
         return null
     }
-
-
 }
