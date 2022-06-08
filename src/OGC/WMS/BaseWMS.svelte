@@ -4,15 +4,21 @@
     import {xml2json} from './../xml2Json.js'
     import WMSCapabilityLayer from './WMSCapabilityLayer.svelte'
     import WMSCapabilities from './WMSCapabilities'
+    import {catalogos_servicos} from './../CatalogoINDE'
     let arr_name_url = []
     let promise = null
     let selected = { id: 1, text: "Selecione um", iri: '' }
-	let iriArray = [
+	/*let iriArray = [
         selected,
 		{ id: 2, text: "IBGE", iri: 'https://geoservicos.ibge.gov.br/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities' },
 		{ id: 3, text: "Base vetorial do OpenStreetMap de 2017", iri: 'http://127.0.0.1:8000/eco-edif-agropec-ext-vegetal-pesca-p-list'},
 		
-	];
+	];*/
+    let i = 1
+    function newIRI(obj) {
+        return { id: i++, text: obj.descricao, iri: obj.wmsGetCapabilities }
+    }
+    let iriArray = [selected ].concat(catalogos_servicos.map( (obj) =>  newIRI(obj)))
     let wmsLayers = []
 	let answer = '';
     function dataFromEntryPointGet(name_and_url_json_obj) {
